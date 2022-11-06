@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -8,12 +9,11 @@ class Artiste(models.Model):
     age = models.IntegerField() 
 
 class Song(models.Model):
-    title = models.CharField() 
-    date_released = models.DateField() 
-    likes = models.ExpressionList
-    artiste_id = models.CharField()
-
+    artiste_id = models.ForeignKey(Artiste, on_delete=models.CASCADE)
+    title = models.CharField(max_length=300) 
+    date_released = models.DateField(default=datetime.today) 
+    likes = models.IntegerField()
 
 class Lyric(models.Model):
-    content = models.CharField()
     song_id = models.ForeignKey(Song, on_delete=models.CASCADE)
+    content = models.CharField(max_length=500)
